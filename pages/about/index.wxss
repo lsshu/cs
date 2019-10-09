@@ -1,0 +1,23 @@
+.userinfo {
+  display: flex;
+  align-items: center;
+}
+.userinfo>button{
+  
+}
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.page__hd{
+  padding: 30rpx 80rpx 80rpx;
+  background: url('http://2019.mafengwo.ink/img/about-head-bg.jpg?1') no-repeat;
+  background-size: 100%;
+}
