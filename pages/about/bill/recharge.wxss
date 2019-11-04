@@ -1,0 +1,3 @@
+.checkbox {
+	position: static !important;
+}

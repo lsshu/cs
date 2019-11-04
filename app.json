@@ -1,7 +1,11 @@
 {
   "pages": [
+    "pages/about/information/examine",
     "pages/index/index",
     "pages/about/index",
+    "pages/about/bill/recharge",
+    "pages/about/bill/details",
+    
     "pages/logs/logs"
   ],
   "window": {

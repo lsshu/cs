@@ -10,8 +10,13 @@
   </view>
 
     <view class="page__bd">
+      <wux-cell-group title="费用明细" label="">
+        <wux-cell title="账单详细" is-link url="bill/details"></wux-cell>
+        <wux-cell title="在线充值" is-link url="bill/recharge"></wux-cell>
+        
+      </wux-cell-group>
       <wux-cell-group title="信息管理" label="">
-        <wux-cell title="申请审核" is-link></wux-cell>
+        <wux-cell title="申请审核" is-link url="information/examine"></wux-cell>
         
         <wux-cell title="获取手机号" is-link open-type="getPhoneNumber" bind:getphonenumber="onGotPhoneNumber"></wux-cell>
         <wux-cell title="获取微信信息" is-link open-type="getUserInfo" bind:getuserinfo="onGotUserInfo"></wux-cell>

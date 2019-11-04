@@ -1,0 +1,18 @@
+<view class="page">
+    <view class="page__hd">
+        <view class="page__title">在线充值</view>
+        <view class="page__desc">请选择需要充值的金额,进行充值!</view>
+    </view>
+    <view class="page__bd page__bd_spacing">
+        <wux-cell-group>
+            <block wx:for="{{ items }}" wx:key="">
+                <wux-cell title="{{ item.label }}">
+                    <wux-selectable slot="footer" wux-class="checkbox" type="radio" value="{{ item.value }}" checked="{{ value === item.value }}" controlled bind:change="onChange" />
+                </wux-cell>
+            </block>
+        </wux-cell-group>
+
+        <wux-button wx:if="{{ loading }}" block loading type="positive" bindtap="onSubmit">充值</wux-button>
+        <wux-button wx:else block type="positive" bindtap="onSubmit">充值</wux-button>
+    </view>
+</view>

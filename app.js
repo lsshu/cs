@@ -1,4 +1,4 @@
-//app.js
+const req = require('utils/request.js');
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -7,11 +7,20 @@ App({
     wx.setStorageSync('logs', logs)
 
     // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    wx.checkSession({
+      fail() {
+        wx.login({
+          success: res => {
+            req.post('/code2Session', { code: res.code }).then((result) => {
+              try {
+                wx.setStorageSync('sessionOpenid', result.data);
+              } catch (e) { }
+            });
+          }
+        });
       }
-    })
+    });
+    
     // 获取用户信息
     wx.getSetting({
       success: res => {
