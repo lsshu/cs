@@ -1,4 +1,11 @@
 {
   "navigationBarTitleText": "信息审核",
-  "usingComponents": {}
+  "usingComponents": {
+    "wux-cell-group": "../../../dist/cell-group/index",
+    "wux-cell": "../../../dist/cell/index",
+    "wux-cascader": "../../../dist/cascader/index",
+    "wux-input": "../../../dist/input/index",
+    "wux-radio-group": "../../../dist/radio-group/index",
+    "wux-radio": "../../../dist/radio/index"
+  }
 }

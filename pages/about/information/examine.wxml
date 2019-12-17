@@ -1,9 +1,49 @@
+<wux-cascader visible="{{ visible1 }}" default-value="{{ value1 }}" title="所在地区" options="{{ options1 }}" bind:close="onClose1" bind:change="onChange1" />
+<wux-cascader visible="{{ visible2 }}" controlled value="{{ value2 }}" title="所在地区" options="{{ options2 }}" bind:close="onClose2" bind:change="onChange2" bind:load="onLoadOptions" />
+
 <view class="page">
-    <!-- <view class="page__hd">
+    <view class="page__hd">
         <view class="page__title">申请审核</view>
         <view class="page__desc">请认真填写你需要提交的信息内容!</view>
-    </view> -->
+    </view>
     <view class="page__bd">
-        
+
+
+      <wux-cell-group title="选择">
+    		<wux-cell title="省市区" extra="{{ title1 }}" bind:click="onOpen1"></wux-cell>
+    		<wux-cell title="村庄" extra="{{ title2 }}" bind:click="onOpen2"></wux-cell>
+    	</wux-cell-group>
+
+      <wux-cell-group title="Normal Usage">
+        <wux-cell hover-class="none">
+          <wux-input label="姓名:" />
+        </wux-cell>
+        <wux-cell hover-class="none">
+          <wux-input>姓名: </wux-input>
+        </wux-cell>
+      </wux-cell-group>
+
+      <wux-radio-group name="d" value="{{ value4 }}" title="Trigger onChange" bind:change="onChange4">
+          <wux-radio title="男性" value="1" />
+          <wux-radio title="女性" value="2" />
+      </wux-radio-group>
+
+      <wux-radio-group name="d" value="{{ value4 }}" title="婚否" bind:change="onChange4">
+          <wux-radio title="已婚" value="1" />
+          <wux-radio title="未婚" value="2" />
+      </wux-radio-group>
+
+      <wux-cell-group title="Normal Usage">
+        <wux-cell hover-class="none">
+          <wux-input>妻子: </wux-input>
+        </wux-cell>
+      </wux-cell-group>
+
+      <wux-cell-group title="Normal Usage">
+        <wux-cell hover-class="none">
+          <wux-input>其它: </wux-input>
+        </wux-cell>
+      </wux-cell-group>
+
     </view>
 </view>

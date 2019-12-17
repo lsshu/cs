@@ -1,1 +1,101 @@
-"use strict";var _baseComponent=_interopRequireDefault(require("../helpers/baseComponent")),_classNames=_interopRequireDefault(require("../helpers/classNames")),_shallowEqual=_interopRequireDefault(require("../helpers/shallowEqual")),_props=require("./props"),_utils=require("./utils");function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function ownKeys(t,e){var a=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);e&&(r=r.filter(function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable})),a.push.apply(a,r)}return a}function _objectSpread(t){for(var e=1;e<arguments.length;e++){var a=null!=arguments[e]?arguments[e]:{};e%2?ownKeys(a,!0).forEach(function(e){_defineProperty(t,e,a[e])}):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(a)):ownKeys(a).forEach(function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(a,e))})}return t}function _toConsumableArray(e){return _arrayWithoutHoles(e)||_iterableToArray(e)||_nonIterableSpread()}function _nonIterableSpread(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function _iterableToArray(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}function _arrayWithoutHoles(e){if(Array.isArray(e)){for(var t=0,a=new Array(e.length);t<e.length;t++)a[t]=e[t];return a}}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}(0,_baseComponent.default)({properties:_props.props,data:{inputValue:[],cols:[],fieldNames:_props.defaultFieldNames},observers:_defineProperty({},"value, options",function(e,t){var a=Object.assign({},_props.defaultFieldNames,this.data.defaultFieldNames),r=(0,_utils.getRealCols)(t,a);(0,_shallowEqual.default)(this.data.cols,r)||this.setData({cols:r}),this.setValue(e,!0)}),methods:{updated:function(e,t){this.data.inputValue===e&&!t||this.setData({inputValue:e})},setValue:function(e,t){var a=this.getValue(e).value;this.updated(a,t)},getValue:function(e,t){var a=0<arguments.length&&void 0!==e?e:this.data.inputValue,r=1<arguments.length&&void 0!==t?t:this.data.cols,n=this.data.fieldNames,o=(0,_utils.getRealValues)(a,r,n),i=_toConsumableArray(o),l=(0,_utils.getIndexesFromValues)(o,r,n);return{value:o,displayValue:(0,_utils.getLabelsFromIndexes)(l,r,n.label),selectedIndex:l,selectedValue:i,cols:r}},onChange:function(e,t,a){var r=_toConsumableArray(this.data.inputValue);r[e]=t,a&&this.triggerEvent(a,_objectSpread({},this.getValue(r),{index:e}))},onBeforeChange:function(e){var t=e.detail.value,a=e.currentTarget.dataset.index;this.onChange(a,t,"beforeChange")},onValueChange:function(e){var t=e.detail.value,a=e.currentTarget.dataset.index;this.onChange(a,t,"valueChange")},onScrollChange:function(e){var t=e.detail.value,a=e.currentTarget.dataset.index;this.onChange(a,t,"scrollChange")}},attached:function(){var e=this.data,t=e.value,a=e.options,r=Object.assign({},_props.defaultFieldNames,this.data.defaultFieldNames),n=(0,_utils.getRealCols)(a,r);this.setData({cols:n,fieldNames:r}),this.setValue(t)}});
+import baseComponent from '../helpers/baseComponent'
+import classNames from '../helpers/classNames'
+import shallowEqual from '../helpers/shallowEqual'
+import { defaultFieldNames, props } from './props'
+import {
+    getRealCols,
+    getRealValues,
+    getIndexesFromValues,
+    getLabelsFromIndexes,
+} from './utils'
+
+baseComponent({
+    properties: props,
+    data: {
+        inputValue: [],
+        cols: [],
+        fieldNames: defaultFieldNames,
+    },
+    observers: {
+        ['value, options'](value, options) {
+            const fieldNames = Object.assign({}, defaultFieldNames, this.data.defaultFieldNames)
+            const cols = getRealCols(options, fieldNames)
+
+            if (!shallowEqual(this.data.cols, cols)) {
+                this.setData({ cols })
+            }
+
+            this.setValue(value, true)
+        },
+    },
+    methods: {
+        updated(inputValue, isForce) {
+            if (this.data.inputValue !== inputValue || isForce) {
+                this.setData({
+                    inputValue,
+                })
+            }
+        },
+        setValue(value, isForce) {
+            const { value: inputValue } = this.getValue(value)
+            this.updated(inputValue, isForce)
+        },
+        getValue(value = this.data.inputValue, cols = this.data.cols) {
+            const { fieldNames } = this.data
+            const inputValue = getRealValues(value, cols, fieldNames)
+            const selectedValue = [...inputValue]
+            const selectedIndex = getIndexesFromValues(inputValue, cols, fieldNames)
+            const displayValue = getLabelsFromIndexes(selectedIndex, cols, fieldNames.label)
+
+            return {
+                value: inputValue,
+                displayValue,
+                selectedIndex,
+                selectedValue,
+                cols,
+            }
+        },
+        /**
+         * 触发 change 事件
+         */
+        onChange(index, value, method) {
+            const inputValue = [...this.data.inputValue]
+            inputValue[index] = value
+            if (method) {
+                this.triggerEvent(method, { ...this.getValue(inputValue), index })
+            }
+        },
+        /**
+         * 当滚动选择开始时的回调函数
+         */
+        onBeforeChange(e) {
+            const { value } = e.detail
+            const { index } = e.currentTarget.dataset
+            this.onChange(index, value, 'beforeChange')
+        },
+        /**
+         * 每列数据选择变化后的回调函数
+         */
+        onValueChange(e) {
+            const { value } = e.detail
+            const { index } = e.currentTarget.dataset
+            this.onChange(index, value, 'valueChange')
+        },
+        /**
+         * 滚动数据选择变化后的回调函数
+         */
+        onScrollChange(e) {
+            const { value } = e.detail
+            const { index } = e.currentTarget.dataset
+            this.onChange(index, value, 'scrollChange')
+        },
+    },
+    attached() {
+        const { value, options } = this.data
+        const fieldNames = Object.assign({}, defaultFieldNames, this.data.defaultFieldNames)
+        const cols = getRealCols(options, fieldNames)
+
+        this.setData({ cols, fieldNames })
+        this.setValue(value)
+    },
+})

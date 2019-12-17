@@ -40,8 +40,8 @@
   left: 0;
   bottom: 0;
   right: 0;
-  height: 2rpx;
-  border-bottom: 2rpx solid #d9d9d9;
+  height: 1PX;
+  border-bottom: 1PX solid #d9d9d9;
   color: #d9d9d9;
   transform-origin: 0 100%;
   transform: scaleY(.5);
@@ -57,9 +57,9 @@
   opacity: .3
 }
 .wux-cell__thumb {
-  display: block;
   width: 40rpx;
   height: 40rpx;
+  display: block;
   margin-right: 10rpx
 }
 .wux-cell__bd {
@@ -73,11 +73,11 @@
   text-align: left;
   line-height: 1.2;
   font-size: 24rpx;
-  color: grey
+  color: rgba(0,0,0,.45)
 }
 .wux-cell__ft {
   text-align: right;
-  color: grey
+  color: rgba(0,0,0,.45)
 }
 .wux-cell--access .wux-cell__ft {
   padding-right: 26rpx;
