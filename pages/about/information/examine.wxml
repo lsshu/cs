@@ -1,5 +1,6 @@
-<wux-cascader visible="{{ visible1 }}" default-value="{{ value1 }}" title="所在地区" options="{{ options1 }}" bind:close="onClose1" bind:change="onChange1" />
-<wux-cascader visible="{{ visible2 }}" controlled value="{{ value2 }}" title="所在地区" options="{{ options2 }}" bind:close="onClose2" bind:change="onChange2" bind:load="onLoadOptions" />
+<wux-cascader visible="{{ region_visible }}" default-value="{{ region_value }}" title="所在地区" options="{{ region_options }}" bind:close="on_region_close" bind:change="on_region_change" />
+
+<wux-cascader visible="{{ serie_visible }}" controlled value="{{ serie_value }}" title="所在地区" options="{{ serie_options }}" bind:close="on_serie_close" bind:change="on_serie_change" bind:load="onLoadOptions" />
 
 <view class="page">
     <view class="page__hd">
@@ -7,43 +8,61 @@
         <view class="page__desc">请认真填写你需要提交的信息内容!</view>
     </view>
     <view class="page__bd">
-
-
-      <wux-cell-group title="选择">
-    		<wux-cell title="省市区" extra="{{ title1 }}" bind:click="onOpen1"></wux-cell>
-    		<wux-cell title="村庄" extra="{{ title2 }}" bind:click="onOpen2"></wux-cell>
+      <wux-cell-group title="请选择">
+    		<wux-cell title="省市区" extra="{{ region_title }}" bind:click="on_region_open"></wux-cell>
+    		<wux-cell title="村庄" extra="{{ serie_title }}" bind:click="on_serie_open"></wux-cell>
     	</wux-cell-group>
 
-      <wux-cell-group title="Normal Usage">
-        <wux-cell hover-class="none">
-          <wux-input label="姓名:" />
-        </wux-cell>
+      <wux-cell-group title="个人信息">
         <wux-cell hover-class="none">
           <wux-input>姓名: </wux-input>
         </wux-cell>
-      </wux-cell-group>
-
-      <wux-radio-group name="d" value="{{ value4 }}" title="Trigger onChange" bind:change="onChange4">
-          <wux-radio title="男性" value="1" />
-          <wux-radio title="女性" value="2" />
-      </wux-radio-group>
-
-      <wux-radio-group name="d" value="{{ value4 }}" title="婚否" bind:change="onChange4">
-          <wux-radio title="已婚" value="1" />
-          <wux-radio title="未婚" value="2" />
-      </wux-radio-group>
-
-      <wux-cell-group title="Normal Usage">
-        <wux-cell hover-class="none">
-          <wux-input>妻子: </wux-input>
-        </wux-cell>
-      </wux-cell-group>
-
-      <wux-cell-group title="Normal Usage">
+        <wux-date-picker mode="date" value="{{value2}}" lang="zh_CN" data-index="2" data-mode="date" bind:confirm="onConfirm">
+          <wux-cell title="生日" is-link extra="{{displayValue2}}"></wux-cell>
+        </wux-date-picker>
         <wux-cell hover-class="none">
           <wux-input>其它: </wux-input>
         </wux-cell>
+        
+        <wux-radio-group name="d" value="{{ value4 }}"  bind:change="onChange4">
+          <wux-radio title="男性" value="1" />
+          <wux-radio title="女性" value="2" />
+        </wux-radio-group>
       </wux-cell-group>
+
+      <wux-cell-group>
+        <wux-cell title="婚否">
+            <wux-switch name="switch" slot="footer" value="{{ switch }}" bind:change="onSwitchChange" />
+        </wux-cell>
+
+        <wux-cell hover-class="none">
+          <wux-input>妻子: </wux-input>
+        </wux-cell>
+
+        
+      </wux-cell-group>
+      
+
+
+      <wux-cell-group>
+        <wux-cell title="是否在世">
+            <wux-switch name="switch" slot="footer" value="{{ switch }}" bind:change="onSwitchChange" />
+        </wux-cell>
+      
+
+        <wux-date-picker mode="date" value="{{value2}}" lang="zh_CN" data-index="2" data-mode="date" bind:confirm="onConfirm">
+          <wux-cell title="日期" is-link extra="{{displayValue2}}"></wux-cell>
+        </wux-date-picker>
+        <wux-cell-group title="葬于">
+          <wux-cell hover-class="none">
+            <wux-field name="textarea" initialValue="456">
+              <wux-textarea rows="3" />
+            </wux-field>
+          </wux-cell>
+        </wux-cell-group>
+      </wux-cell-group>
+      
+
 
     </view>
 </view>

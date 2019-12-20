@@ -1,25 +1,15 @@
 import data from './data'
+const req = require('../../../utils/request.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    options1: data,
-    value1: [],
-    options2: [
-      {
-        value: 'beijing',
-        label: '北京',
-        isLeaf: false,
-      },
-      {
-        value: 'hangzhou',
-        label: '杭州',
-        isLeaf: false,
-      },
-    ],
-    value2: [],
+    region_options: data,
+    region_value: [],
+    serie_options: [],
+    serie_value: [],
     value4:1
   },
 
@@ -78,36 +68,48 @@ Page({
   onShareAppMessage: function () {
 
   },
-  onOpen1() {
-    this.setData({ visible1: true })
+  on_region_open() {
+    this.setData({ region_visible: true })
   },
-  onClose1() {
-    this.setData({ visible1: false })
+  on_region_close() {
+    this.setData({ region_visible: false })
   },
-  onChange1(e) {
-    this.setData({ title1: e.detail.options.map((n) => n.label).join('/') })
-    console.log('onChange1', e.detail)
+  on_region_change(e) {
+    var _this = this;
+    var region_title = e.detail.options.map((n) => n.label).join('/');
+    _this.setData({ region_title: region_title });
+    if (e.detail.done){
+      req.post('/region_series', { region_title: region_title }).then((result) => {
+        var result = result.data;
+        console.log(result)
+        _this.setData({ serie_options: result});
+        
+      });
+    }
+    console.log('on_region_change', e.detail)
   },
-  onOpen2() {
-    this.setData({ visible2: true })
+
+
+  on_serie_open() {
+    this.setData({ serie_visible: true })
   },
-  onClose2() {
-    this.setData({ visible2: false })
+  on_serie_close() {
+    this.setData({ serie_visible: false })
   },
-  onChange2(e) {
+  on_serie_change(e) {
     console.log('onChange2', e.detail)
-    this.setData({ value2: e.detail.value, title2: e.detail.done && e.detail.options.map((n) => n.label).join('/') })
+    this.setData({ serie_value: e.detail.value, serie_title: e.detail.done && e.detail.options.map((n) => n.label).join('/') })
   },
   onLoadOptions(e) {
     console.log('onLoadOptions', e.detail)
     const { value } = e.detail
-    const options2 = [...this.data.options2]
+    const serie_options = [...this.data.serie_options]
 
     wx.showLoading({ mask: true })
 
     setTimeout(() => {
       if (value[value.length - 1] === 'beijing') {
-        options2.forEach((n) => {
+        serie_options.forEach((n) => {
           if (n.value === 'beijing') {
             n.children = [
               {
@@ -122,7 +124,7 @@ Page({
           }
         })
       } else if (value[value.length - 1] === 'hangzhou') {
-        options2.forEach((n) => {
+        serie_options.forEach((n) => {
           if (n.value === 'hangzhou') {
             n.children = [
               {
@@ -140,7 +142,7 @@ Page({
 
       wx.hideLoading()
 
-      this.setData({ value2: value, options2 })
+      this.setData({ serie_value: value, serie_options })
     }, 1000)
   },
 
@@ -155,4 +157,22 @@ Page({
   onChange4(e) {
     this.onChange('value4', e)
   },
+
+  onConfirm(e) {
+    const { index, mode } = e.currentTarget.dataset
+    this.setValue(e.detail, index, mode)
+    console.log(`onConfirm${index}`, e.detail)
+  },
+  setValue(values, key, mode) {
+    this.setData({
+      [`value${key}`]: values.value,
+      [`displayValue${key}`]: values.label,
+      // [`displayValue${key}`]: values.displayValue.join(' '),
+    })
+  },
+
+  onSwitchChange(e) {
+    this.setData({ switch: e.detail.value })
+  },
+
 })

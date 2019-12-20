@@ -27,9 +27,9 @@ Page({
         req.post('/payment/recharge', { openid: sessionOpenid.data.openid, total_fee: total_fee }).then((result) => {
           var result = result.data.data;
 
-          result.success = this.PaymentSuccess,
-            result.fail = this.PaymentFail,
-            wx.requestPayment(result);
+          result.success = this.PaymentSuccess;
+          result.fail = this.PaymentFail;
+          wx.requestPayment(result);
         });
       }
     } catch (e) {

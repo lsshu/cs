@@ -6,6 +6,9 @@
     "wux-cascader": "../../../dist/cascader/index",
     "wux-input": "../../../dist/input/index",
     "wux-radio-group": "../../../dist/radio-group/index",
-    "wux-radio": "../../../dist/radio/index"
+    "wux-radio": "../../../dist/radio/index",
+    "wux-date-picker": "../../../dist/date-picker/index",
+    "wux-switch": "../../../dist/switch/index",
+    "wux-textarea": "../../../dist/textarea/index"
   }
 }
